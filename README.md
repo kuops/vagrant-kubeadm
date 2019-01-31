@@ -377,6 +377,7 @@ kubectl apply -f istio/ingress.yaml
 https://jaeger-istio.k8s.yourdomain.com
 https://prometheus-istio.k8s.yourdomain.com
 https://grafana-istio.k8s.yourdomain.com
+https://servicegraph-istio.k8s.yourdomain.com
 ```
 
 

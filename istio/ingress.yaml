@@ -35,4 +35,9 @@ spec:
       - backend:
           serviceName: grafana
           servicePort: 3000
-
+  - host: servicegraph-istio.k8s.kuops.com
+    http:
+      paths:
+      - backend:
+          serviceName: servicegraph
+          servicePort: 8088
