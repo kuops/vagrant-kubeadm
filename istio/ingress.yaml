@@ -41,9 +41,3 @@ spec:
       - backend:
           serviceName: servicegraph
           servicePort: 8088
-  - host: zipkin-istio.k8s.kuops.com
-    http:
-      paths:
-      - backend:
-          serviceName: zipkin
-          servicePort: 9411

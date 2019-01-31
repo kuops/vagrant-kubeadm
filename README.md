@@ -351,7 +351,7 @@ PATH=$PATH
 安装 istio
 
 ```
-kubectl create ns
+kubectl create ns istio-system
 kubectl apply -f istio/istio.yaml
 ```
 
