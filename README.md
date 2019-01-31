@@ -8,6 +8,7 @@
 2. 安装 Windows WSL 
 
 3. 开启 wsl vagrant , WSL vagrant 需要设置以下变量,加入 `~/.bashrc`
+
 ```
 # Windows VBoxManage.exe 所在的安装目录
 export PATH="$PATH:/mnt/c/Software/VirtualBox"
@@ -18,6 +19,8 @@ export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH=/mnt/d/
 # 自定义 vagrant 的元数据存放目录
 export VAGRANT_HOME=/mnt/d/vagrant-home/.vagrant.d/
 ```
+
+4. 有一个购买的域名,并添加一条 A 记录 `*.k8s` 到 `10.0.7.100`
 
 ## 节点信息
 
