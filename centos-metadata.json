@@ -1,0 +1,10 @@
+{                                                                                                 
+    "name": "centos/7",                                                                           
+    "versions": [{                                                                                
+        "version": "1811.02",                                                                     
+        "providers": [{                                                                           
+            "name": "virtualbox",                                                                 
+            "url": "file:///mnt/d/localrepo/CentOS-7-x86_64-Vagrant-1811_02.VirtualBox.box"       
+        }]                                                                                        
+    }]                                                                                            
+}                                                                                                 

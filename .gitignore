@@ -1,0 +1,4 @@
+*.vmdk
+.vagrant/
+.ssh-keys/
+k8s-cert/

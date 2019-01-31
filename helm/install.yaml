@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-helm
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: install-helm
+        image: lachlanevenson/k8s-helm:v2.12.1
+        command: ["/bin/cp",  "/usr/local/bin/helm", "/host/usr/local/bin/helm"]
+        volumeMounts:
+        - mountPath: /host/usr/local/bin
+          name: copy-path
+      volumes:
+      - name: copy-path
+        hostPath:
+          path: /usr/local/bin
+          type: Directory
+  backoffLimit: 4

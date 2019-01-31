@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-istio
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: install-istio
+        image: kuopsme/istioctl:1.0.5
+        command: ["/bin/cp",  "/usr/local/bin/istioctl", "/host/usr/local/bin/istioctl"]
+        volumeMounts:
+        - mountPath: /host/usr/local/bin
+          name: copy-path
+      volumes:
+      - name: copy-path
+        hostPath:
+          path: /usr/local/bin
+          type: Directory
+  backoffLimit: 4
