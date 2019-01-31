@@ -1,9 +1,3 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: istio-system
-  labels:
-    istio-injection: disabled
 ---
 # Source: istio/charts/galley/templates/configmap.yaml
 apiVersion: v1
@@ -10331,7 +10325,11 @@ metadata:
     istio: security
 data:
   custom-resources.yaml: |-    
-    # Authentication policy to enable permissive mode for all services (that have sidecar) in the mesh.
+    # These policy and destination rules effectively enable mTLS for all services in the mesh. For now,
+    # they are added to Istio installation yaml for backward compatible. In future, they should be in
+    # a separated yaml file so that customer can enable mTLS independent from installation.
+    
+    # Authentication policy to enable mutual TLS for all services (that have sidecar) in the mesh.
     apiVersion: "authentication.istio.io/v1alpha1"
     kind: "MeshPolicy"
     metadata:
@@ -10343,8 +10341,41 @@ data:
         heritage: Tiller
     spec:
       peers:
-      - mtls:
-          mode: PERMISSIVE
+      - mtls: {}
+    ---
+    # Corresponding destination rule to configure client side to use mutual TLS when talking to
+    # any service (host) in the mesh.
+    apiVersion: networking.istio.io/v1alpha3
+    kind: DestinationRule
+    metadata:
+      name: "default"
+      labels:
+        app: istio-security
+        chart: security-1.0.5
+        release: istio
+        heritage: Tiller
+    spec:
+      host: "*.local"
+      trafficPolicy:
+        tls:
+          mode: ISTIO_MUTUAL
+    ---
+    # Destination rule to dislabe (m)TLS when talking to API server, as API server doesn't have sidecar.
+    # Customer should add similar destination rules for other services that dont' have sidecar.
+    apiVersion: networking.istio.io/v1alpha3
+    kind: DestinationRule
+    metadata:
+      name: "api-server"
+      labels:
+        app: istio-security
+        chart: security-1.0.5
+        release: istio
+        heritage: Tiller
+    spec:
+      host: "kubernetes.default.svc.cluster.local"
+      trafficPolicy:
+        tls:
+          mode: DISABLE
   run.sh: |-    
     #!/bin/sh
     
@@ -13524,7 +13555,7 @@ spec:
           - name: PILOT_PUSH_THROTTLE_COUNT
             value: "100"
           - name: PILOT_TRACE_SAMPLING
-            value: "100"
+            value: "1"
           resources:
             requests:
               cpu: 500m

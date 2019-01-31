@@ -351,11 +351,22 @@ PATH=$PATH
 安装 istio
 
 ```
-kubectl apply -f istio/crds.yaml
-kubectl apply -f istio/istio-demo.yaml
+kubectl create ns
+kubectl apply -f istio/istio.yaml
 ```
 
-将 default ns 设置 `istio-injection`
+此 istio 模板是由 helm 生成的,以下是选项参数
+
+```
+helm template istio-1.0.5/install/kubernetes/helm/istio --name istio \
+    --namespace istio-system \
+    --set global.mtls.enabled=true \
+    --set tracing.enabled=true \
+    --set servicegraph.enabled=true \
+    --set grafana.enabled=true > istio.yaml
+```
+
+如果需要开启 sidecar 自动注入模式,将 default ns 设置 `istio-injection`
 
 ```
 kubectl label namespace default istio-injection=enabled --overwrite
