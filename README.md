@@ -140,6 +140,14 @@ exit
 scp -rp -i ~/.ssh/vagrant_id_rsa vagrant@vagrant-kubernetes:/data/k8s-cert .
 ```
 
+为 default namaspace 设置 tls secret ，所有部署在 default ns 的服务都可以使用
+
+```
+kubectl -n default create secret tls default-tls-certs \
+  --key k8s-cert/k8s.yourdomain.com.key \
+  --cert k8s-cert/k8s.yourdomain.com.crt
+```
+
 ##  kubernetes 组件
 
 ### metallb

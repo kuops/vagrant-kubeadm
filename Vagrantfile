@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.hostmanager.include_offline = true
   config.vm.synced_folder '.', '/vagrant', disabled: "true"
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "8192"
+    vb.memory = "12288"
     vb.cpus = "4"
     vb.name = "vagrant-kubernetes"
     unless File.exist?(file_to_disk)
