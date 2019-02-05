@@ -137,7 +137,7 @@ Vagrant.configure("2") do |config|
 	sudo chown vagrant:vagrant /home/vagrant/.kube/config
 	sudo mkdir -p /root/.kube
 	sudo cp -rpf /etc/kubernetes/admin.conf /root/.kube/config
-	sudo chown vagrant:vagrant /root/.kube/config
+	sudo chown root:root /root/.kube/config
 
 	# taint the master node
 	sudo kubectl taint nodes --all node-role.kubernetes.io/master-
