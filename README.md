@@ -330,9 +330,7 @@ kubectl apply -f coredns/service.yaml
 监控 nginx-ingress , 由于 ingress 在单的 ns 中，需要给 service account 授权，修改 `prometheus-roleBindingSpecificNamespaces.yaml` 和 `prometheus-roleSpecificNamespaces.yaml` 文件
 
 ```
-kubectl apply -f prometheus-roleBindingSpecificNamespaces.yaml
-kubectl apply -f prometheus-roleSpecificNamespaces.yaml
-kubectl apply -f kube-prometheus/prometheus-serviceMonitorNginxIngress.yaml
+kubectl apply -f nginx-ingress/servicemonitor.yaml
 ```
 
 导入 nginx-ingress 的 grafana 模板

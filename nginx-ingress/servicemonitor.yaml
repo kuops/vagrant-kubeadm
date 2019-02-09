@@ -1,0 +1,57 @@
+---
+# rbac role
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    name: ingress-prometheus
+    namespace: ingress-nginx
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - services
+    - endpoints
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+---
+# rbac rolebinding
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: ingress-prometheus
+    namespace: ingress-nginx
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: ingress-prometheus
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: monitoring
+---
+# servicemonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ingress-nginx
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    release: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+  endpoints:
+  - port: metrics
+    interval: 15s
+    port: metrics
+  namespaceSelector:
+    matchNames:
+    - ingress-nginx
+
