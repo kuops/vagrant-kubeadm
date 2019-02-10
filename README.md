@@ -327,7 +327,7 @@ coredns 自带的 prometheus 中没有声明 metrics 的 port ，重新部署一
 kubectl apply -f coredns/service.yaml
 ```
 
-监控 nginx-ingress , 由于 ingress 在单的 ns 中，需要给 service account 授权，修改 `prometheus-roleBindingSpecificNamespaces.yaml` 和 `prometheus-roleSpecificNamespaces.yaml` 文件
+监控 nginx-ingress , ingress 在不同的 ns 中，需要给 service account 授权:
 
 ```
 kubectl apply -f nginx-ingress/servicemonitor.yaml
@@ -339,7 +339,7 @@ kubectl apply -f nginx-ingress/servicemonitor.yaml
 https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
 ```
 
-![ingress-dashboard](images/ingress-dashboard.png)
+![ingress-grafana](images/ingress-dashboard.png)
 
 
 ### isio (可选)
