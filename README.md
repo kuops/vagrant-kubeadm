@@ -277,6 +277,8 @@ source <(helm completion bash)
 
 ### EFK (可选)
 
+如果 docker 的存储路径不为 `/data/docker/containers` 修改 `fluentd-es-ds.yaml`
+
 创建 secret
 
 ```
